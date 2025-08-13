@@ -16,7 +16,7 @@ class GithubRepoOwnerSpringApplicationTests {
 	private GithubRepoOwnerClient githubRepoOwnerClient;
 	@Test
 	void happyPathTest() {
-		List<githubRepoOwnerRepos> repos = githubRepoOwnerClient.getUserRepos("R3VANEK");
+		List<githubRepoOwnerRepos> repos = githubRepoOwnerClient.getUserRepos("GodsCrisis");
 		assertNotNull(repos);
 		assertFalse(repos.isEmpty(), "The list of repositories should not be empty");
 		repos.forEach(repo->{

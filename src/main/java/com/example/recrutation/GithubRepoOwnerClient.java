@@ -22,7 +22,7 @@ public class GithubRepoOwnerClient {
     }
     public List<githubRepoOwnerRepos> getUserRepos(String owner) {
         try{
-            String url= BASE_URL +"/users/"+owner+"/repos";
+            String url= String.format("%s/users/%s/repos",BASE_URL,owner);
             githubRepoResponse[] repos = restTemplate.getForObject(url, githubRepoResponse[].class);
             if (repos == null) {
                 return List.of();
@@ -30,7 +30,6 @@ public class GithubRepoOwnerClient {
              return Arrays.stream(repos).filter(repo->!repo.fork()).map(repo->{
                  List<githubRepoOwnerRepos.githubRepoOwnerBranch> branches= getBranches(repo.owner.login(), repo.name());
                     return new githubRepoOwnerRepos(
-                            repo.fork(),
                             repo.name,
                             repo.owner.login,
                             branches
@@ -44,7 +43,7 @@ public class GithubRepoOwnerClient {
 
     private List<githubRepoOwnerRepos.githubRepoOwnerBranch> getBranches(String owenr, String repo){
         BranchResponse[] branches = restTemplate.getForObject(
-                BASE_URL + "/repos/" + owenr + "/" + repo + "/branches",
+                String.format("%s/repos/%s/%s/branches", BASE_URL, owenr, repo),
                 BranchResponse[].class
         );
         if(branches == null) return List.of();
